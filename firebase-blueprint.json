@@ -1,0 +1,224 @@
+{
+  "entities": {
+    "SuratMasuk": {
+      "title": "SuratMasuk",
+      "description": "Dokumen agenda dan disposisi surat masuk dinas",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "noAgenda": { "type": "string", "maxLength": 128 },
+        "noSurat": { "type": "string", "maxLength": 128 },
+        "pengirim": { "type": "string", "maxLength": 256 },
+        "perihal": { "type": "string", "maxLength": 512 },
+        "tanggalSurat": { "type": "string", "maxLength": 64 },
+        "tanggalDiterima": { "type": "string", "maxLength": 64 },
+        "sifatSurat": { "type": "string", "enum": ["Biasa", "Penting", "Rahasia", "Segera / Kilat"] },
+        "status": { "type": "string", "maxLength": 64 },
+        "statusDisposisi": { "type": "string", "enum": ["Belum Disposisi", "Sedang Diproses", "Selesai"] },
+        "kategori": { "type": "string", "maxLength": 128 },
+        "lampiranCount": { "type": "number" },
+        "fileUrl": { "type": "string", "maxLength": 1024 }
+      },
+      "required": ["id", "noAgenda", "noSurat", "pengirim", "perihal", "status"]
+    },
+    "SuratKeluar": {
+      "title": "SuratKeluar",
+      "description": "Draf dan pengesahan surat keluar dinas sekolah",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "noSurat": { "type": "string", "maxLength": 128 },
+        "kodeKlasifikasi": { "type": "string", "maxLength": 64 },
+        "tujuan": { "type": "string", "maxLength": 256 },
+        "perihal": { "type": "string", "maxLength": 512 },
+        "tanggalSurat": { "type": "string", "maxLength": 64 },
+        "status": { "type": "string", "maxLength": 64 },
+        "pembuat": { "type": "string", "maxLength": 128 },
+        "sifatSurat": { "type": "string", "enum": ["Biasa", "Penting", "Rahasia", "Segera / Kilat"] },
+        "ringkasanIsi": { "type": "string", "maxLength": 2048 }
+      },
+      "required": ["id", "noSurat", "tujuan", "perihal", "status"]
+    },
+    "Siswa": {
+      "title": "Siswa",
+      "description": "Data induk peserta didik format Dapodik",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "nisn": { "type": "string", "maxLength": 32 },
+        "nis": { "type": "string", "maxLength": 32 },
+        "nama": { "type": "string", "maxLength": 128 },
+        "jenisKelamin": { "type": "string", "enum": ["L", "P"] },
+        "kelas": { "type": "string", "maxLength": 32 },
+        "status": { "type": "string", "maxLength": 64 },
+        "namaWali": { "type": "string", "maxLength": 128 },
+        "noHp": { "type": "string", "maxLength": 32 },
+        "alamat": { "type": "string", "maxLength": 512 }
+      },
+      "required": ["id", "nisn", "nama", "kelas", "status"]
+    },
+    "Pegawai": {
+      "title": "Pegawai",
+      "description": "Database guru dan staf tata usaha",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "nip": { "type": "string", "maxLength": 64 },
+        "nuptk": { "type": "string", "maxLength": 64 },
+        "nama": { "type": "string", "maxLength": 128 },
+        "jenisPegawai": { "type": "string", "enum": ["Guru", "Tenaga Kependidikan / TU"] },
+        "jabatan": { "type": "string", "maxLength": 128 },
+        "statusKepegawaian": { "type": "string", "enum": ["PNS", "PPPK", "GTT / PTT"] },
+        "statusPresensiHariIni": { "type": "string", "enum": ["Hadir", "Izin", "Sakit", "Cuti", "Dinas Luar"] }
+      },
+      "required": ["id", "nama", "jenisPegawai", "jabatan"]
+    },
+    "PengajuanCuti": {
+      "title": "PengajuanCuti",
+      "description": "Formulir izin cuti GTK",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "pegawaiId": { "type": "string", "maxLength": 128 },
+        "namaPegawai": { "type": "string", "maxLength": 128 },
+        "jenisCuti": { "type": "string", "maxLength": 64 },
+        "tanggalMulai": { "type": "string", "maxLength": 32 },
+        "tanggalSelesai": { "type": "string", "maxLength": 32 },
+        "durasiHari": { "type": "number" },
+        "alasan": { "type": "string", "maxLength": 512 },
+        "status": { "type": "string", "enum": ["Menunggu Persetujuan", "Disetujui", "Ditolak"] },
+        "tanggalPengajuan": { "type": "string", "maxLength": 32 }
+      },
+      "required": ["id", "namaPegawai", "jenisCuti", "status"]
+    },
+    "PembayaranSPP": {
+      "title": "PembayaranSPP",
+      "description": "Kuitansi dan pencatatan loket kasir TU",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "noKuitansi": { "type": "string", "maxLength": 128 },
+        "namaSiswa": { "type": "string", "maxLength": 128 },
+        "kelas": { "type": "string", "maxLength": 32 },
+        "posBayar": { "type": "string", "maxLength": 64 },
+        "bulan": { "type": "string", "maxLength": 64 },
+        "nominal": { "type": "number" },
+        "tanggalBayar": { "type": "string", "maxLength": 32 },
+        "metodePembayaran": { "type": "string", "maxLength": 64 },
+        "status": { "type": "string", "maxLength": 32 },
+        "penerimaStaf": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["id", "noKuitansi", "namaSiswa", "nominal", "status"]
+    },
+    "TransaksiKas": {
+      "title": "TransaksiKas",
+      "description": "Buku Kas Pembantu BOS dan Keuangan Sekolah",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "tanggal": { "type": "string", "maxLength": 32 },
+        "tipe": { "type": "string", "enum": ["Pemasukan", "Pengeluaran"] },
+        "kategori": { "type": "string", "maxLength": 128 },
+        "deskripsi": { "type": "string", "maxLength": 512 },
+        "nominal": { "type": "number" },
+        "saldoAkhir": { "type": "number" },
+        "penanggungJawab": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["id", "tanggal", "tipe", "nominal"]
+    },
+    "BarangInventaris": {
+      "title": "BarangInventaris",
+      "description": "Inventaris sarana dan prasarana sekolah (KIR)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "kodeBarang": { "type": "string", "maxLength": 128 },
+        "namaBarang": { "type": "string", "maxLength": 128 },
+        "kategori": { "type": "string", "maxLength": 128 },
+        "ruangan": { "type": "string", "maxLength": 128 },
+        "kondisi": { "type": "string", "enum": ["Baik", "Rusak Ringan", "Rusak Berat"] },
+        "jumlah": { "type": "number" },
+        "satuan": { "type": "string", "maxLength": 32 },
+        "sumberDana": { "type": "string", "maxLength": 64 },
+        "tahunPengadaan": { "type": "string", "maxLength": 16 },
+        "nilaiAset": { "type": "number" }
+      },
+      "required": ["id", "kodeBarang", "namaBarang", "ruangan", "kondisi", "jumlah"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Jejak riwayat aktivitas pengguna sistem",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "timestamp": { "type": "string", "maxLength": 64 },
+        "actor": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "maxLength": 128 },
+        "action": { "type": "string", "maxLength": 256 },
+        "module": { "type": "string", "maxLength": 64 },
+        "details": { "type": "string", "maxLength": 1024 }
+      },
+      "required": ["id", "timestamp", "actor", "action", "module"]
+    },
+    "SchoolProfile": {
+      "title": "SchoolProfile",
+      "description": "Profil identitas instansi SMP",
+      "type": "object",
+      "properties": {
+        "namaSekolah": { "type": "string", "maxLength": 256 },
+        "npsn": { "type": "string", "maxLength": 32 },
+        "akreditasi": { "type": "string", "maxLength": 8 },
+        "alamat": { "type": "string", "maxLength": 512 },
+        "email": { "type": "string", "maxLength": 128 },
+        "telepon": { "type": "string", "maxLength": 64 },
+        "namaKepalaSekolah": { "type": "string", "maxLength": 128 },
+        "nipKepalaSekolah": { "type": "string", "maxLength": 64 },
+        "namaKepalaTU": { "type": "string", "maxLength": 128 },
+        "nipKepalaTU": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["namaSekolah", "npsn"]
+    }
+  },
+  "firestore": {
+    "/surat_masuk/{suratId}": {
+      "schema": "SuratMasuk",
+      "description": "Koleksi surat masuk dinas sekolah dan disposisi"
+    },
+    "/surat_keluar/{suratId}": {
+      "schema": "SuratKeluar",
+      "description": "Koleksi draf dan pengesahan surat keluar dinas"
+    },
+    "/siswa/{siswaId}": {
+      "schema": "Siswa",
+      "description": "Koleksi data peserta didik format Dapodik"
+    },
+    "/pegawai/{pegawaiId}": {
+      "schema": "Pegawai",
+      "description": "Koleksi pendidik dan tenaga kependidikan"
+    },
+    "/pengajuan_cuti/{cutiId}": {
+      "schema": "PengajuanCuti",
+      "description": "Koleksi pengajuan izin dan cuti GTK"
+    },
+    "/pembayaran_spp/{pembayaranId}": {
+      "schema": "PembayaranSPP",
+      "description": "Koleksi kuitansi transaksi kasir SPP dan iuran komite"
+    },
+    "/transaksi_kas/{transaksiId}": {
+      "schema": "TransaksiKas",
+      "description": "Koleksi mutasi Buku Kas Pembantu BOS"
+    },
+    "/inventaris/{inventarisId}": {
+      "schema": "BarangInventaris",
+      "description": "Koleksi aset barang inventaris sekolah dan KIR"
+    },
+    "/audit_logs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Koleksi log aktivitas operasional pengguna"
+    },
+    "/school_profile/config": {
+      "schema": "SchoolProfile",
+      "description": "Dokumen konfigurasi dan identitas instansi sekolah"
+    }
+  }
+}

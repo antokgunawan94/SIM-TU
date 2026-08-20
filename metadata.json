@@ -1,0 +1,6 @@
+{
+  "name": "SIM-TU SMP - Sistem Administrasi Tata Usaha",
+  "description": "Sistem Informasi Tata Usaha (TU) SMP terpadu dengan arsitektur persuratan e-Disposisi digital fleksibel, data kesiswaan & mutasi, keuangan SPP, kepegawaian, dan inventaris BMN.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

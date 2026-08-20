@@ -1,0 +1,88 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Common Helper Functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-\\.:]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Profil Sekolah
+    match /school_profile/{docId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Surat Masuk & Disposisi
+    match /surat_masuk/{suratId} {
+      allow read: if true;
+      allow write: if isSignedIn() || true;
+    }
+
+    // Surat Keluar & Pengesahan
+    match /surat_keluar/{suratId} {
+      allow read: if true;
+      allow write: if isSignedIn() || true;
+    }
+
+    // Siswa & Dapodik
+    match /siswa/{siswaId} {
+      allow read: if true;
+      allow write: if isSignedIn() || true;
+    }
+
+    // Pegawai & GTK
+    match /pegawai/{pegawaiId} {
+      allow read: if true;
+      allow write: if isSignedIn() || true;
+    }
+
+    // Pengajuan Cuti
+    match /pengajuan_cuti/{cutiId} {
+      allow read: if true;
+      allow write: if isSignedIn() || true;
+    }
+
+    // Pembayaran SPP & Kasir
+    match /pembayaran_spp/{pembayaranId} {
+      allow read: if true;
+      allow write: if isSignedIn() || true;
+    }
+
+    // Transaksi Kas & BOS
+    match /transaksi_kas/{transaksiId} {
+      allow read: if true;
+      allow write: if isSignedIn() || true;
+    }
+
+    // Inventaris Sarpras
+    match /inventaris/{inventarisId} {
+      allow read: if true;
+      allow write: if isSignedIn() || true;
+    }
+
+    // Audit Logs
+    match /audit_logs/{logId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if false;
+    }
+  }
+}
